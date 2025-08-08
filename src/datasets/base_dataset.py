@@ -181,7 +181,7 @@ class BaseDataset(Dataset):
                 random package with seed 42.
         """
         if shuffle_index:
-            random.seed(42)
+            random.seed(1)
             random.shuffle(index)
 
         if limit is not None:
