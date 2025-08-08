@@ -66,23 +66,31 @@ class ASVspoof2019_LA(BaseDataset):
         print(str(torchaudio.list_audio_backends()))
 
         # to get pretty object names
-        number_of_zeros = int(np.log10(dataset_length)) + 1
-        print(f"Creating ASVspoof2019 {name} Dataset partition")
+        print(f"Creating ASVspoof2019 LA {name} Dataset partition")
         for i in tqdm(range(dataset_length)):
             # create dataset
-            loaded_path = data_path / f"{i:0{number_of_zeros}d}.pt"
             speech_path = (
                 path
                 + f"/LA/LA/ASVspoof2019_LA_{'train' if name=='train' else 'eval'}/flac/{id[i]}.flac"
             )
-            data, sr = torchaudio.load(speech_path)
             label = 1 if labels[i] == "bonafide" else 0
-            torch.save(data, loaded_path)
 
             # parse dataset metadata and append it to index
-            index.append({"path": str(loaded_path), "label": label})
+            index.append({"path": str(speech_path), "label": label})
 
         # write index to disk
         write_json(index, str(data_path / "index.json"))
 
         return index
+
+    def load_object(self, path):
+        """
+        Load object from disk.
+
+        Args:
+            path (str): path to the object.
+        Returns:
+            data_object (Tensor):
+        """
+        data_object, sr = torchaudio.load(path)
+        return data_object
