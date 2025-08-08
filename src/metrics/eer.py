@@ -76,6 +76,9 @@ class EqualErrorRate(BaseMetric):
         self.labels += labels.tolist()
 
     def calculate_epoch(self):
+        """
+        Computes equal error rate across one epoch.
+        """
         bonafide_scores = [
             self.scores[i] for i in range(len(self.scores)) if self.labels[i] == 1
         ]

@@ -57,10 +57,10 @@ class BaseDataset(Dataset):
         """
         data_dict = self._index[ind]
         data_path = data_dict["path"]
-        data_object = self.load_object(data_path)
+        speech = self.load_object(data_path)
         data_label = data_dict["label"]
 
-        instance_data = {"data_object": data_object, "labels": data_label}
+        instance_data = {"spectrogram": speech, "labels": data_label}
         instance_data = self.preprocess_data(instance_data)
 
         return instance_data
@@ -181,7 +181,7 @@ class BaseDataset(Dataset):
                 random package with seed 42.
         """
         if shuffle_index:
-            random.seed(1)
+            random.seed(42)
             random.shuffle(index)
 
         if limit is not None:

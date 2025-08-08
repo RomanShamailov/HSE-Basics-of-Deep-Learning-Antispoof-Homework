@@ -55,16 +55,16 @@ class LCNN(nn.Module):
             nn.Linear(80, output_size),
         )
 
-    def forward(self, data_object, **batch):
+    def forward(self, spectrogram, **batch):
         """
         Model forward method.
 
         Args:
-            image (Tensor): input image.
+            spectrogram (Tensor): input spectrogram.
         Returns:
             output (dict): output dict containing logits.
         """
-        return {"logits": self.net(data_object)}
+        return {"logits": self.net(spectrogram)}
 
     def __str__(self):
         """

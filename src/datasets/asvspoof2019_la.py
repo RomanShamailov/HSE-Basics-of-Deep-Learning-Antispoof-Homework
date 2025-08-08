@@ -22,6 +22,7 @@ class ASVspoof2019_LA(BaseDataset):
     def __init__(self, dataset_length, name="train", *args, **kwargs):
         """
         Args:
+            dataset_length (int): length of the dataset
             name (str): partition name
         """
         index_path = ROOT_PATH / "data" / "example" / name / "index.json"
@@ -43,6 +44,7 @@ class ASVspoof2019_LA(BaseDataset):
         the dataset.
 
         Args:
+            dataset_length (int): length of the dataset
             name (str): partition name
         Returns:
             index (list[dict]): list, containing dict for each element of
@@ -62,8 +64,6 @@ class ASVspoof2019_LA(BaseDataset):
         )
         id = protocol[1]
         labels = protocol[4]
-
-        print(str(torchaudio.list_audio_backends()))
 
         # to get pretty object names
         print(f"Creating ASVspoof2019 LA {name} Dataset partition")
@@ -90,7 +90,7 @@ class ASVspoof2019_LA(BaseDataset):
         Args:
             path (str): path to the object.
         Returns:
-            data_object (Tensor):
+            speech (Tensor):
         """
-        data_object, sr = torchaudio.load(path)
-        return data_object
+        speech, sr = torchaudio.load(path)
+        return speech

@@ -1,9 +1,12 @@
 import warnings
 
 import hydra
+import kagglehub
+import pandas as pd
 import torch
 from hydra.utils import instantiate
 from omegaconf import OmegaConf
+from tqdm.auto import tqdm
 
 from src.datasets.data_utils import get_dataloaders
 from src.trainer import Trainer
@@ -74,6 +77,29 @@ def main(config):
     )
 
     trainer.train()
+
+    # saving model outputs after the last epoch to csv for grading
+    print("Saving to csv...")
+    eval_id = pd.read_csv(
+        kagglehub.dataset_download("awsaf49/asvpoof-2019-dataset")
+        + "/LA/LA/ASVspoof2019_LA_cm_protocols/ASVspoof2019.LA.cm.eval.trl.txt",
+        sep=" ",
+        header=None,
+        usecols=[1, 4],
+    )[1]
+    res = []
+    model.eval()
+    for i, batch in tqdm(
+        enumerate(dataloaders["test"]), total=len(dataloaders["test"])
+    ):
+        spectrogram = batch["spectrogram"].to(device)
+        with torch.no_grad():
+            output = model(spectrogram)  # calculate model output
+        probs = torch.nn.functional.softmax(output["logits"], dim=1)
+        for j in range(spectrogram.shape[0]):
+            res.append([eval_id[64 * i + j], float(probs[j][1])])
+    df = pd.DataFrame(res)
+    df.to_csv("rgshamailov.csv", index=False, header=False)
 
 
 if __name__ == "__main__":

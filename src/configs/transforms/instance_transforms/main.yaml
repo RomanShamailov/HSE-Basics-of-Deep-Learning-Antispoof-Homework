@@ -1,5 +1,5 @@
 train:
-  data_object: # name of the tensor on which we apply transform
+  spectrogram: # name of the tensor on which we apply transform
     _target_: torchvision.transforms.Compose
     transforms:
     - _target_: src.transforms.AugsCreation
@@ -9,9 +9,10 @@ train:
       win_length: 320
       hop_length: 160
       n_mels: 20
+    - _target_: src.transforms.AbsLog
     - _target_: src.transforms.PadOrTrunc
 inference:
-  data_object: # name of the tensor on which we apply transform
+  spectrogram: # name of the tensor on which we apply transform
     _target_: torchvision.transforms.Compose
     transforms:
     - _target_: torchaudio.transforms.MelSpectrogram
@@ -20,4 +21,5 @@ inference:
       win_length: 320
       hop_length: 160
       n_mels: 20
+    - _target_: src.transforms.AbsLog
     - _target_: src.transforms.PadOrTrunc
