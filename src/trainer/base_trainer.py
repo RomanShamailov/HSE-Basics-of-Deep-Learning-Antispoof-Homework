@@ -274,6 +274,9 @@ class BaseTrainer:
                     metrics=self.evaluation_metrics,
                 )
             self.writer.set_step(epoch * self.epoch_len, part)
+            # do per-epoch calculation
+            for met in self.metrics["inference"]:
+                self.evaluation_metrics.update(met.name, met.calculate_epoch())
             self._log_scalars(self.evaluation_metrics)
             self._log_batch(
                 batch_idx, batch, part

@@ -1,1 +1,1 @@
-from src.datasets.example import ExampleDataset
+from src.datasets.asvspoof2019_la import ASVspoof2019_LA

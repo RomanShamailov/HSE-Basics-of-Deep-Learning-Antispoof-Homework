@@ -1,0 +1,10 @@
+train:
+  _target_: src.datasets.ASVspoof2019_LA
+  dataset_length: 25380
+  name: "train"
+  instance_transforms: ${transforms.instance_transforms.train}
+test:
+  _target_: src.datasets.ASVspoof2019_LA
+  dataset_length: 71237
+  name: "test"
+  instance_transforms: ${transforms.instance_transforms.inference}

@@ -52,7 +52,12 @@ class Trainer(BaseTrainer):
             metrics.update(loss_name, batch[loss_name].item())
 
         for met in metric_funcs:
-            metrics.update(met.name, met(**batch))
+            # we return None inside the EER class so that
+            # we wouldn't do per-batch logging and instead
+            # just save the outputs for later calculation
+            if met(**batch) is not None:
+                metrics.update(met.name, met(**batch))
+
         return batch
 
     def _log_batch(self, batch_idx, batch, mode="train"):

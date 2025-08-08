@@ -48,7 +48,10 @@ def main(config):
     # build optimizer, learning rate scheduler
     trainable_params = filter(lambda p: p.requires_grad, model.parameters())
     optimizer = instantiate(config.optimizer, params=trainable_params)
-    lr_scheduler = instantiate(config.lr_scheduler, optimizer=optimizer)
+    step_size = 10 * len(dataloaders["train"])  # multiply by 0.5 every 10 epochs
+    lr_scheduler = instantiate(
+        config.lr_scheduler, optimizer=optimizer, step_size=step_size
+    )
 
     # epoch_len = number of iterations for iteration-based training
     # epoch_len = None or len(dataloader) for epoch-based training

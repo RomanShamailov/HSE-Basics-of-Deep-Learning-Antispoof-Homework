@@ -20,3 +20,10 @@ class BaseMetric:
         Can use external functions (like TorchMetrics) or custom ones.
         """
         raise NotImplementedError()
+
+    @abstractmethod
+    def calculate_epoch(self):
+        """
+        Defines metric calculation logic at the end of an epoch.
+        """
+        raise NotImplementedError()
