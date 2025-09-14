@@ -10,6 +10,8 @@
 
 This repository contains the homework done during the HSE FCS 2025 summer mini-course dedicated to deep learning. The mini-course was based on LauzHack's summer deep learning bootcamp (https://github.com/LauzHack/deep-learning-bootcamp/tree/summer25). This homework is a voice antispoof detection neural network trained on ASVspoof 2019's Logical Access partition (https://www.kaggle.com/datasets/awsaf49/asvpoof-2019-dataset/data) [1]. Equal error rate (EER) was used as the model's performance metric. The goal was to drop the EER on the evaluation set below $5.3$. 
 
+Link to the template used for this model's development: https://github.com/Blinorot/pytorch_project_template
+
 ## Methodology
 
 The main architecture of this model is LightCNN (LCNN), described in paper [2].
