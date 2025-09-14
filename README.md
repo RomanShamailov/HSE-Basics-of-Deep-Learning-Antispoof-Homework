@@ -23,6 +23,7 @@ Before feeding an audiofile to the front-end, one of the 3 following augmentatio
 - The audiofile is unchanged.
 - The volume is raised by $25%$.
 - Random Gaussian noise is added to the audio.
+  
 These augmentations were taken from this notebook: https://colab.research.google.com/drive/1KgLPWtBVZVkPVsuaQjbwM-2phAUAjdD1#scrollTo=0ce54033-c77d-42f9-83e4-5b235f0fa78c
 
 Transformation into a MEL spectrogram with parameters taken from paper [4] was used as the front-end:
